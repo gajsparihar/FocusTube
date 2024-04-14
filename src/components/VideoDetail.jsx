@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import ReactPlayer from "react-player";
 import { Link, useParams } from "react-router-dom";
 
@@ -6,15 +6,20 @@ import { Video, Videos } from "./";
 import { Box, Stack, Typography } from "@mui/material";
 import { fetchFromAPI } from "../utils/fetchFromApi";
 import { CheckCircle } from "@mui/icons-material";
+import { AppContext } from "../contexts/AppContext";
+import {
+  SET_VIDEO_DETAIL
+} from "../reducers/globalReducer";
 
 const VideoDetail = () => {
   const { id } = useParams();
-  const [video, setVideo] = useState({});
-  const [relatedVideos, setRelatedVideos] = useState([]);
+
+  const { state, dispatch } = useContext(AppContext);
+  const { videoDetail } = state;
 
   useEffect(() => {
     fetchFromAPI(`videos?part=snippet,statistics&id=${id}`).then((data) => {
-      setVideo(data?.items?.[0] || {});
+      dispatch({ type: SET_VIDEO_DETAIL, payload: data?.items?.[0] || {} });
     });
 
     // fetchFromAPI(`search?part=snippet&relatedToVideoId=${id}&type=video`).then(
@@ -22,7 +27,7 @@ const VideoDetail = () => {
     // );
   }, [id]);
 
-  const { snippet, statistics } = video;
+  const { snippet, statistics } = videoDetail;
   return (
     <Box minHeight="95vh">
       <Stack direction={{ xs: "column", md: "row" }}>

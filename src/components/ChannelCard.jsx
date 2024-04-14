@@ -4,7 +4,7 @@ import { CheckCircle } from "@mui/icons-material";
 
 import { demoProfilePicture } from "../utils/constants";
 
-function VideoCard({ channel, marginTop }) {
+function ChannelCard({ channel, marginTop }) {
   return (
     <Box
       sx={{
@@ -58,4 +58,4 @@ function VideoCard({ channel, marginTop }) {
   );
 }
 
-export default VideoCard;
+export default ChannelCard;

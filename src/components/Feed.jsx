@@ -1,18 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import { Sidebar, Videos } from "./";
 
 import { fetchFromAPI } from "../utils/fetchFromApi";
+import { AppContext } from "../contexts/AppContext";
+import { UPDATE_FEED_VIDEOS } from "../reducers/globalReducer";
 
 const Feed = () => {
-  const [selectedCategory, setSelectedCategory] = useState("New");
-  const [videos, setVideos] = useState([]);
+  const { state, dispatch } = useContext(AppContext);
+  const { feedVideos, selectedChannel } = state;
 
   useEffect(() => {
-    fetchFromAPI(`search?part=snippet&q=${selectedCategory}`).then((data) => {
-      setVideos(data?.items || []);
+    fetchFromAPI(`search?part=snippet&q=${selectedChannel}`).then((data) => {
+      dispatch({ type: UPDATE_FEED_VIDEOS, payload: data?.items || [] });
     });
-  }, [selectedCategory]);
+  }, [selectedChannel]);
 
   return (
     <Stack sx={{ flexDirection: { sx: "column", md: "row" } }}>
@@ -23,10 +25,7 @@ const Feed = () => {
           px: { sx: 0, md: 2 },
         }}
       >
-        <Sidebar
-          selectedCategory={selectedCategory}
-          setSelectedCategory={setSelectedCategory}
-        />
+        <Sidebar />
         <Typography
           className="copyright"
           variant="body2"
@@ -42,9 +41,9 @@ const Feed = () => {
           mb={2}
           sx={{ color: "white" }}
         >
-          {selectedCategory} <span style={{ color: "#F31503" }}>Videos</span>
+          {selectedChannel} <span style={{ color: "#F31503" }}>Videos</span>
         </Typography>
-        <Videos videos={videos} />
+        <Videos videos={feedVideos} />
       </Box>
     </Stack>
   );

@@ -2,11 +2,14 @@ import React, { useContext } from "react";
 import { Stack } from "@mui/material";
 import { categories } from "../utils/constants";
 import { AppContext } from "../contexts/AppContext";
-import { SET_SELECTED_CHANNEL, UPDATE_FEED_VIDEOS } from "../reducers/globalReducer";
+import {
+  SET_SELECTED_CHANNEL,
+  UPDATE_FEED_VIDEOS,
+} from "../reducers/globalReducer";
 
 const Sidebar = () => {
   const { state, dispatch } = useContext(AppContext);
-  const { selectedChannel } = state;
+  const { selectedChannel, myChannels } = state;
 
   const setselectedChannel = (name) => {
     dispatch({ type: SET_SELECTED_CHANNEL, payload: name });
@@ -21,33 +24,36 @@ const Sidebar = () => {
         flexDirection: { md: "column" },
       }}
     >
-      {categories.map((category) => (
-        <button
-          className="category-btn"
-          style={{
-            background: category.name === selectedChannel && "#FC1503",
-            color: "white",
-          }}
-          key={category.name}
-          onClick={() => setselectedChannel(category.name)}
-        >
-          <span
+      {Object.keys(myChannels).map((channelId) => {
+        const channel = myChannels[channelId];
+        return (
+          <button
+            className="category-btn"
             style={{
-              color: category.name === selectedChannel ? "white" : "red",
-              marginRight: "15px",
+              background: channelId === selectedChannel && "#FC1503",
+              color: "white",
             }}
+            key={channelId}
+            onClick={() => setselectedChannel(channelId)}
           >
-            {category.icon}
-          </span>
-          <span
-            style={{
-              opacity: category.name === selectedChannel ? "1" : "0.8",
-            }}
-          >
-            {category.name}
-          </span>
-        </button>
-      ))}
+            {/* <span
+              style={{
+                color: channelId === selectedChannel ? "white" : "red",
+                marginRight: "15px",
+              }}
+            >
+              {channel.icon || ''}
+            </span> */}
+            <span
+              style={{
+                opacity: channelId === selectedChannel ? "1" : "0.8",
+              }}
+            >
+              {channel?.snippet?.title}
+            </span>
+          </button>
+        );
+      })}
     </Stack>
   );
 };

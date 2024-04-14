@@ -2,14 +2,14 @@ import { useState, useEffect, useContext } from "react";
 import ReactPlayer from "react-player";
 import { Link, useParams } from "react-router-dom";
 
-import { Video, Videos } from "./";
+import { Video, Videos } from "..";
 import { Box, Stack, Typography } from "@mui/material";
-import { fetchFromAPI } from "../utils/fetchFromApi";
+import { fetchFromAPI } from "../../utils/fetchFromApi";
 import { CheckCircle } from "@mui/icons-material";
-import { AppContext } from "../contexts/AppContext";
+import { AppContext } from "../../contexts/AppContext";
 import {
   SET_VIDEO_DETAIL
-} from "../reducers/globalReducer";
+} from "../../reducers/globalReducer";
 
 const VideoDetail = () => {
   const { id } = useParams();

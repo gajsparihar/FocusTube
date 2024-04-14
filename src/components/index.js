@@ -1,10 +1,14 @@
-export { default as Navbar} from './Navbar'
-export { default as Feed} from './Feed'
-export { default as ChannelDetail} from './ChannelDetail'
-export { default as SearchFeed} from './SearchFeed'
-export { default as VideoDetail} from './VideoDetail'
-export { default as SearchBar} from './SearchBar'
-export { default as Sidebar} from './Sidebar'
-export { default as Videos} from './Videos'
-export { default as VideoCard} from './VideoCard'
-export { default as ChannelCard} from './ChannelCard'
+export { default as Navbar } from "./Navbar";
+export { default as Feed } from "./Feed";
+export { default as ChannelDetail } from "./channel/ChannelDetail";
+export { default as SearchFeed } from "./SearchFeed";
+export { default as VideoDetail } from "./video/VideoDetail";
+export { default as SearchBar } from "./SearchBar";
+export { default as Sidebar } from "./Sidebar";
+export { default as Videos } from "./video/Videos";
+export { default as VideoCard } from "./video/VideoCard";
+export { default as ChannelLinkCard } from "./channel/ChannelLinkCard";
+export { default as ChannelCardContent } from "./channel/ChannelCardContent";
+export { default as ChannelSelectCard } from "./channel/ChannelSelectCard";
+export { default as SearchField } from "./SearchField";
+export { default as PersonalizeView } from "./PersonalizeView";

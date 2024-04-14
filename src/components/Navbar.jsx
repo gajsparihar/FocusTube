@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 import { Link } from "react-router-dom";
 import { logo } from "../utils/constants";
 import { SearchBar } from "../components";
@@ -19,7 +19,10 @@ const Navbar = () => {
       <Link to="/" style={{ display: "flex", alignItems: "center" }}>
         <img src={logo} alt="logo" height={45} />
       </Link>
-      <SearchBar />
+      <Link to="/personal"  style={{ display: "flex", alignItems: "right", color: "#fff" }}>
+        <Button className="yt-button" variant="contained">Change Preferences</Button>
+      </Link>
+      {/* <SearchBar /> */}
     </Stack>
   );
 };

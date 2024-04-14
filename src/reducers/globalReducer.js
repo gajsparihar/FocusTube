@@ -1,4 +1,6 @@
 export const globalState = {
+  myChannels: {},
+  channelSelectionDone: false,
   feedVideos: [],
   searchVideos: [],
   channelDetail: {},
@@ -13,6 +15,11 @@ export const SET_VIDEO_DETAIL = "SET_VIDEO_DETAIL";
 export const SET_CHANNEL_DETAIL = "SET_CHANNEL_DETAIL";
 export const UPDATE_CHANNEL_VIDEOS = "UPDATE_CHANNEL_VIDEOS";
 export const SET_SELECTED_CHANNEL = "SET_SELECTED_CHANNEL";
+export const UPDATE_MY_CHANNELS = "UPDATE_MY_CHANNELS";
+export const SET_SEARCH_CHANNELS = "SET_SEARCH_CHANNELS";
+export const REMOVE_MY_CHANNELS = "REMOVE_MY_CHANNELS";
+export const SET_MY_CHANNELS = "SET_MY_CHANNELS";
+export const TOGGLE_CHANNEL_SELECTION = "TOGGLE_CHANNEL_SELECTION";
 
 export const reducerFn = (state, action) => {
   const { type, payload } = action;
@@ -50,6 +57,33 @@ export const reducerFn = (state, action) => {
         ...state,
         feedVideos: [],
         selectedChannel: payload,
+      };
+    case UPDATE_MY_CHANNELS:
+      const myChannels = state.myChannels;
+      if (payload?.id?.channelId) myChannels[payload.id.channelId] = payload;
+      return {
+        ...state,
+        myChannels,
+      };
+    case REMOVE_MY_CHANNELS:
+      const selectedChannels = { ...state.myChannels };
+
+      delete selectedChannels[payload];
+
+      return {
+        ...state,
+        myChannels: selectedChannels,
+      };
+    case TOGGLE_CHANNEL_SELECTION:
+      return {
+        ...state,
+        channelSelectionDone: !state.channelSelectionDone,
+      };
+    case SET_MY_CHANNELS:
+      return {
+        ...state,
+        myChannels: payload,
+        selectedChannel: Object.keys(payload)[0]
       };
     default:
       return state;

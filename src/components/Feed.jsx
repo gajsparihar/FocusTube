@@ -5,16 +5,24 @@ import { Sidebar, Videos } from "./";
 import { fetchFromAPI } from "../utils/fetchFromApi";
 import { AppContext } from "../contexts/AppContext";
 import { UPDATE_FEED_VIDEOS } from "../reducers/globalReducer";
+import { useNavigate } from "react-router-dom";
 
 const Feed = () => {
   const { state, dispatch } = useContext(AppContext);
-  const { feedVideos, selectedChannel } = state;
+  const { feedVideos, selectedChannel, myChannels } = state;
+  const navigate = useNavigate();
+
+ 
 
   useEffect(() => {
-    fetchFromAPI(`search?part=snippet&q=${selectedChannel}`).then((data) => {
+    fetchFromAPI(`search?part=snippet&channelId=${selectedChannel}`).then((data) => {
       dispatch({ type: UPDATE_FEED_VIDEOS, payload: data?.items || [] });
     });
   }, [selectedChannel]);
+
+  if (Object.keys(myChannels).length === 0) {
+    return navigate('/personal')
+  }
 
   return (
     <Stack sx={{ flexDirection: { sx: "column", md: "row" } }}>
@@ -31,7 +39,6 @@ const Feed = () => {
           variant="body2"
           sx={{ mt: 1.5, color: "#fff" }}
         >
-          Copyright 2022 Gajendra
         </Typography>
       </Box>
       <Box p={2} sx={{ overlfowY: "auto", height: "90vh", flex: 2 }}>
@@ -41,7 +48,7 @@ const Feed = () => {
           mb={2}
           sx={{ color: "white" }}
         >
-          {selectedChannel} <span style={{ color: "#F31503" }}>Videos</span>
+          {myChannels[selectedChannel]?.snippet?.title} <span style={{ color: "#F31503" }}>Videos</span>
         </Typography>
         <Videos videos={feedVideos} />
       </Box>

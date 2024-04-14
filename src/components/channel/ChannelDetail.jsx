@@ -1,10 +1,10 @@
 import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { Box } from "@mui/material";
-import { Videos, ChannelCard } from "./";
-import { fetchFromAPI } from "../utils/fetchFromApi";
-import { AppContext } from "../contexts/AppContext";
-import { SET_CHANNEL_DETAIL } from "../reducers/globalReducer";
+import { Videos, ChannelLinkCard } from "..";
+import { fetchFromAPI } from "../../utils/fetchFromApi";
+import { AppContext } from "../../contexts/AppContext";
+import { SET_CHANNEL_DETAIL } from "../../reducers/globalReducer";
 
 const ChannelDetail = () => {
   const { id } = useParams();
@@ -19,7 +19,7 @@ const ChannelDetail = () => {
       const payload = {};
   
       if (channel?.status === "fulfilled") {
-        payload.channel = channel?.value?.items || {};
+        payload.channel = channel?.value?.items[0] || {};
       }
 
       if (videos?.status === "fulfilled") {
@@ -41,7 +41,7 @@ const ChannelDetail = () => {
             height: "300px",
           }}
         />
-        <ChannelCard channel={channelDetail} marginTop="-93px" />
+        <ChannelLinkCard channel={channelDetail} marginTop="-93px" />
       </Box>
       <Box display="flex" p="2">
         <Box sx={{ mr: { sm: "100px" } }} />

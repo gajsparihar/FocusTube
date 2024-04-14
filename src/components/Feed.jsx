@@ -15,6 +15,8 @@ const Feed = () => {
  
 
   useEffect(() => {
+    if (!selectedChannel) return;
+    
     fetchFromAPI(`search?part=snippet&channelId=${selectedChannel}`).then((data) => {
       dispatch({ type: UPDATE_FEED_VIDEOS, payload: data?.items || [] });
     });

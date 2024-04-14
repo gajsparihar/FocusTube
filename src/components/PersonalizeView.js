@@ -6,6 +6,7 @@ import { fetchFromAPI } from "../utils/fetchFromApi";
 import { AppContext } from "../contexts/AppContext";
 import {
   REMOVE_MY_CHANNELS,
+  SET_SELECTED_CHANNEL,
   TOGGLE_CHANNEL_SELECTION,
   UPDATE_MY_CHANNELS,
 } from "../reducers/globalReducer";
@@ -56,6 +57,8 @@ const PersonalizeView = () => {
   };
 
   const channelSelectionDone = () => {
+    const keys = Object.keys(myChannels) || [];
+    dispatch({ type: SET_SELECTED_CHANNEL, payload: keys[0] });
     localStorage.setItem("myChannels", JSON.stringify(myChannels));
     navigate("/");
   };
@@ -81,7 +84,11 @@ const PersonalizeView = () => {
           display: Object.keys(myChannels).length > 0 ? "block" : "none",
         }}
       >
-        <Button className="yt-button" variant="contained" onClick={channelSelectionDone}>
+        <Button
+          className="yt-button"
+          variant="contained"
+          onClick={channelSelectionDone}
+        >
           I have selected My channels
         </Button>
       </Typography>
